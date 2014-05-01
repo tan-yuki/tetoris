@@ -7,7 +7,7 @@
 
         model: App.TetoriminoModel,
 
-        fixed: null,
+        fixedPositionList: null,
 
         initialize: function(options) {
             var list = [];
@@ -19,7 +19,7 @@
                 silent: true
             });
 
-            this.fixed = [];
+            this.fixedPositionList = [];
         },
 
         createNewTetorimino: function() {
@@ -42,11 +42,20 @@
         },
 
         fix: function(tetorimino) {
-            this.fixed.push(tetorimino);
+            this.addFixedPositions(tetorimino);
             this.trigger('fix', tetorimino);
         },
 
-        fixedPositionList: function() {
+        addFixedPositions: function(tetorimino) {
+            var positinos = tetorimino.getPositionList();
+            for (var i = 0, len = positinos.length; i < len; i++) {
+                var p = positinos[i];
+                this.fixedPositionList.push(p);
+            }
+        },
+
+        getFixedPositionList: function() {
+            return this.fixedPositionList;
         }
 
     });

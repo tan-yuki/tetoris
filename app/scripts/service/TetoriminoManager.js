@@ -43,6 +43,10 @@
             this.tetoriminoCollection.dequeue();
         },
 
+        getFixedPositionList: function() {
+            return this.tetoriminoCollection.getFixedPositionList();
+        },
+
         canMoveTo: function(vector, startingPoint) {
             var newX = startingPoint.x + vector.x;
             var newY = startingPoint.y + vector.y;
@@ -53,6 +57,19 @@
 
             if (newY < 0 || newY > this.col - 1) {
                 return false;
+            }
+
+            var fixedList = this.getFixedPositionList();
+            if (!fixedList) {
+                return true;
+            }
+
+            for (var i = 0, len = fixedList.length; i < len; i++) {
+                var fixed = fixedList[i];
+
+                if (newX === fixed.x && newY === fixed.y) {
+                    return false;
+                }
             }
 
             return true;
