@@ -22,3 +22,7 @@ body {
 #main table td.S { background-color: purple; }
 #main table td.T { background-color: olive; }
 #main table td.Z { background-color: slateblue; }
+
+#footer p {
+    text-align: center;
+}
