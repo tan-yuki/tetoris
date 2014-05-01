@@ -95,6 +95,11 @@
             }
 
             return true;
+        },
+
+        isGameOver: function() {
+            var fixedList = this.getFixedPositionList();
+            return !!_.where(fixedList, {y:0}).length;
         }
 
     });
