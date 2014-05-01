@@ -5,9 +5,9 @@
 
     App.TetoriminoCollection = Backbone.Collection.extend({
 
-        currentIndex: 0,
-
         model: App.TetoriminoModel,
+
+        fixed: null,
 
         initialize: function(options) {
             var list = [];
@@ -18,6 +18,8 @@
             this.add(list, {
                 silent: true
             });
+
+            this.fixed = [];
         },
 
         createNewTetorimino: function() {
@@ -25,14 +27,26 @@
         },
 
         current: function() {
-            return this.at(this.currentIndex);
+            return this.at(0);
         },
 
         dequeue: function() {
-            this.unshift(this.createNewTetorimino());
-            this.currentIndex++;
+            var tetorimino = this.shift();
+            this.add(this.createNewTetorimino());
+
+            this.fix(tetorimino);
 
             this.trigger('dequeue');
+
+            return tetorimino;
+        },
+
+        fix: function(tetorimino) {
+            this.fixed.push(tetorimino);
+            this.trigger('fix', tetorimino);
+        },
+
+        fixedPositionList: function() {
         }
 
     });

@@ -4,6 +4,8 @@
     App.CellView = Backbone.View.extend({
         tagName: 'td',
 
+        fixed: false,
+
         x: 0,
 
         y: 0,
@@ -16,22 +18,42 @@
 
             this.listenTo(App.mediator, 'cell:watch', this.watchTetorimino);
             this.listenTo(this.tetoriminoCollection, 'dequeue', this.watchTetorimino);
+            this.listenTo(this.tetoriminoCollection, 'fix', this.fix);
+        },
+
+        fix: function(tetorimino) {
+            if (this.setTetorimino(tetorimino)) {
+                this.fixed = true;
+            }
+        },
+
+        setTetorimino: function(tetorimino) {
+            if (this.fixed) {
+                return false;
+            }
+
+            if (tetorimino.placedIn(this.x, this.y)) {
+                this.$el.addClass(tetorimino.getCode());
+                return true;
+            }
+
+            this.$el.removeClass();
+            return false;
         },
 
         render: function() {
             var model = this.tetoriminoCollection.current();
-            if (model.placedIn(this.x, this.y)) {
-                this.$el.addClass(model.getCode());
-            } else {
-                this.$el.removeClass();
-            }
+            this.setTetorimino(model);
 
             return this;
         },
 
         watchTetorimino: function() {
-            var tetorimino = this.tetoriminoCollection.current();
+            if (this.fixed) {
+                return;
+            }
 
+            var tetorimino = this.tetoriminoCollection.current();
             this.listenTo(tetorimino, 'change', this.render);
         }
 
