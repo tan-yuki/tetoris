@@ -39,6 +39,10 @@
             this.current().left();
         },
 
+        rotate: function() {
+            this.current().rotate();
+        },
+
         fix: function() {
             this.tetoriminoCollection.dequeue();
         },
@@ -47,15 +51,12 @@
             return this.tetoriminoCollection.getFixedPositionList();
         },
 
-        canMoveTo: function(vector, startingPoint) {
-            var newX = startingPoint.x + vector.x;
-            var newY = startingPoint.y + vector.y;
-
-            if (newX < 0 || newX > this.row - 1) {
+        canMoveTo: function(x, y) {
+            if (x < 0 || x > this.row - 1) {
                 return false;
             }
 
-            if (newY < 0 || newY > this.col - 1) {
+            if (y < 0 || y > this.col - 1) {
                 return false;
             }
 
@@ -67,7 +68,7 @@
             for (var i = 0, len = fixedList.length; i < len; i++) {
                 var fixed = fixedList[i];
 
-                if (newX === fixed.x && newY === fixed.y) {
+                if (x === fixed.x && y === fixed.y) {
                     return false;
                 }
             }

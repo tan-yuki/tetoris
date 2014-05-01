@@ -22,6 +22,8 @@
                 App.service.tetoriminoManager.right();
             } else if (code == 40) { // down key
                 App.service.tetoriminoManager.down();
+            } else if (code == 32) { // space key
+                App.service.tetoriminoManager.rotate();
             }
         },
 
