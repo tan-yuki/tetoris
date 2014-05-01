@@ -56,6 +56,39 @@
 
         getFixedPositionList: function() {
             return this.fixedPositionList;
+        },
+
+        destroyLine: function(y) {
+            var positions = this.getFixedPositionList();
+
+            // delete this `y` line
+            var fixedPositionList = _.filter(positions, function(p) {
+                return p.y !== y
+            });
+
+            // padding this line
+            fixedPositionList = _.map(fixedPositionList, function(p) {
+                if (p.y < y) {
+                    p.y++;
+                }
+
+                return p;
+            });
+
+            this.fixedPositionList = fixedPositionList;
+
+            this.trigger('destroyLine', y);
+        },
+
+        isFixed: function(x, y) {
+            return !!this.getFixedPositionList(x, y);
+        },
+
+        getFixedPosition: function(x, y) {
+            var positions = this.getFixedPositionList();
+            return _.find(positions, function(p) {
+                return p.x === x && p.y === y;
+            });
         }
 
     });

@@ -16,14 +16,13 @@
             App.service.tetoriminoManager = new App.TetoriminoManagerModel({
                 col: col,
                 row: row,
-                tetoriminoCollection: tetoriminoCollection,
+                tetoriminoCollection: tetoriminoCollection
             });
 
             this.workspace = new App.WorkSpaceView({
                 board: new App.BoardView({
                     col: col,
-                    row: row,
-                    tetoriminoCollection: tetoriminoCollection,
+                    row: row
                 })
             });
             this.subspace  = new App.SubSpaceView(options.subspace || {});

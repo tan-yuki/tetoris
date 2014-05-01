@@ -21,6 +21,10 @@
             this.tetoriminoCollection = options.tetoriminoCollection;
         },
 
+        getTetoriminoCollection: function() {
+            return this.tetoriminoCollection;
+        },
+
         current: function() {
             return this.tetoriminoCollection.current();
         },
@@ -45,10 +49,27 @@
 
         fix: function() {
             this.tetoriminoCollection.dequeue();
+
+            this.checkFilledLine();
         },
 
         getFixedPositionList: function() {
             return this.tetoriminoCollection.getFixedPositionList();
+        },
+
+        checkFilledLine: function() {
+            var positions = this.getFixedPositionList();
+
+            for (var i = 0; i < this.col; i++) {
+                var linePositions = _.where(positions, {y: i});
+                if (_.uniq(_.pluck(linePositions, 'x')).length === this.row) {
+                    this.destroyLine(i);
+                }
+            }
+        },
+
+        destroyLine: function(i) {
+            this.tetoriminoCollection.destroyLine(i);
         },
 
         canMoveTo: function(x, y) {

@@ -104,7 +104,8 @@
         createPosition: function(options) {
             return {
                 x: options.x,
-                y: options.y
+                y: options.y,
+                code: this.getCode()
             };
         },
 

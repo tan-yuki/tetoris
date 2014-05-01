@@ -9,14 +9,11 @@
 
         row: 0,
 
-        tetoriminoCollection: null,
-
         cellCollection: null,
 
         initialize: function(options) {
             this.col = options.col;
             this.row = options.row;
-            this.tetoriminoCollection = options.tetoriminoCollection;
         },
 
         render: function() {
@@ -31,8 +28,7 @@
 
                     var cell = new App.CellView({
                         x: j,
-                        y: i,
-                        tetoriminoCollection: this.tetoriminoCollection
+                        y: i
                     });
                     cell_list.push(cell.$el);
                 }
