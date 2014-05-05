@@ -68,7 +68,7 @@
         },
 
         refresh: function() {
-            this.fixed = false;
+            // 自分自身のCellに色がつくかどうか判定し直す
             var p = this.tetoriminoCollection.getFixedPosition(this.x, this.y);
             if (p) {
                 this.setCode(p.code);
@@ -77,6 +77,10 @@
             }
 
             this.clearCode();
+            this.fixed = false;
+
+            // re-watch
+            this.watchTetorimino();
         },
 
         watchTetorimino: function() {
