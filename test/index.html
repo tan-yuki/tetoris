@@ -17,10 +17,45 @@
         var should = chai.should();
     </script>
 
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/underscore/underscore.js"></script>
+    <script src="../bower_components/backbone/backbone.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
     <!-- include source files here... -->
+    <script src="scripts/namespace.js"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/models/CellModel.js"></script>
+    <script src="scripts/models/TetoriminoModel.js"></script>
+    <script src="scripts/models/TetoriminoCellModel.js"></script>
+    <script src="scripts/models/tetorimino/I.js"></script>
+    <script src="scripts/models/tetorimino/J.js"></script>
+    <script src="scripts/models/tetorimino/L.js"></script>
+    <script src="scripts/models/tetorimino/O.js"></script>
+    <script src="scripts/models/tetorimino/S.js"></script>
+    <script src="scripts/models/tetorimino/T.js"></script>
+    <script src="scripts/models/tetorimino/Z.js"></script>
+    <script src="scripts/collections/TetoriminoCollection.js"></script>
+    <script src="scripts/collections/TetoriminoCellCollection.js"></script>
+    <script src="scripts/collections/FixedCellCollection.js"></script>
+    <script src="scripts/service/TetoriminoManager.js"></script>
+    <script src="scripts/views/CellView.js"></script>
+    <script src="scripts/views/UserOperatorView.js"></script>
+    <script src="scripts/views/TimerView.js"></script>
+    <script src="scripts/views/BoardView.js"></script>
+    <script src="scripts/views/SubSpaceView.js"></script>
+    <script src="scripts/views/NextHoldTetoriminoView.js"></script>
+    <script src="scripts/views/NextHoldView.js"></script>
+    <script src="scripts/views/WorkSpaceView.js"></script>
+    <script src="scripts/views/AppView.js"></script>
+    <script src="scripts/main.js"></script>
 
     <!-- include spec files here... -->
-    <script src="spec/test.js"></script>
+    <script src="spec/models/CellModelSpec.js"></script>
+    <script src="spec/models/TetoriminoCellModelSpec.js"></script>
 
     <script>mocha.run()</script>
 </body>

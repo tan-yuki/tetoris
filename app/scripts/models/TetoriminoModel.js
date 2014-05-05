@@ -9,13 +9,19 @@
 
         fixed: false,
 
+        /**
+         * @var App.TetoriminoCellCollection
+         */
         positions: null,
 
+        /**
+         * @var App.TetoriminoCellModel
+         */
         centerPosition: null,
 
         initialize: function() {
-            this.positions = this.getStartPosition();
-            this.centerPosition = this.getStartCenterPosition();
+            this.positions = this.createStartPositions();
+            this.centerPosition = this.createStartCenterPosition();
         },
 
         _action: function(vector) {
@@ -23,28 +29,24 @@
                 return true;
             }
 
-            var positions = this.getPositionList();
-            for (var i = 0, len = positions.length; i < len; i++) {
-                var p = positions[i];
+            // 移動できるかをチェック
+            var positions = this.positions;
 
-                var newX = p.x + vector.x;
-                var newY = p.y + vector.y;
-
-                if (!App.service.tetoriminoManager.canMoveTo(newX, newY)) {
-                    return false;
-                }
+            if (!positions.canMoveTo(vector)) {
+                return false;
             }
 
-            for (var i = 0, len = positions.length; i < len; i++) {
-                var p = positions[i];
-                p.x += vector.x;
-                p.y += vector.y;
-            }
+            // 移動できる場合は実際に移動
+            positions.moveTo(vector);
 
-            this.centerPosition.x += vector.x;
-            this.centerPosition.y += vector.y;
+            // 中心の位置も変更
+            this.centerPosition.moveTo({
+                x: vector.x,
+                y: vector.y
+            });
 
             this.trigger('change');
+
             return true;
         },
 
@@ -61,68 +63,84 @@
         },
 
         rotate: function() {
-            var positions = this.getPositionList();
+            var positions = this.positions;
             var center = this.centerPosition;
 
-            var newPositions = [];
-            for (var i = 0, len = positions.length; i < len; i++) {
-                var p = positions[i];
-
+            var newPositions = positions.map(_.bind(function(p) {
                 // 中心を(0,0)と考えた座標系に
                 // [ 0 , 1 ]
                 // [-1 , 0 ]
                 // の行列を掛ければいい
 
                 // 中心を(0,0)へ移動
-                var tmpX = p.x - center.x;
-                var tmpY = p.y - center.y;
+                var tmpX = p.get('x') - center.get('x');
+                var tmpY = p.get('y') - center.get('y');
 
                 // 回転行列を掛ける
                 var newX = -tmpY;
                 var newY = tmpX;
 
                 // 中心を元の位置に戻す
-                newX += center.x;
-                newY += center.y;
+                newX += center.get('x');
+                newY += center.get('y');
 
                 if (!App.service.tetoriminoManager.canMoveTo(newX, newY)) {
                     return false;
                 }
 
-                newPositions[i] = this.createPosition({
+                return this.createPosition({
                     x:newX,
                     y:newY
                 });
+            }, this));
+
+            // 一つでもfalseの要素があった場合は失敗
+            if (!_.every(newPositions)) {
+                return false;
             }
 
-            this.positions = newPositions;
+            this.positions.reset(newPositions, {silent: true});
             this.trigger('change');
 
             return true;
         },
 
         createPosition: function(options) {
-            return {
+            return new App.TetoriminoCellModel({
                 x: options.x,
                 y: options.y,
                 code: this.getCode()
-            };
+            });
         },
 
         getCode: function() {
             throw new Error('Not implements getCode');
         },
 
-        getPositionList: function() {
-            return this.positions;
+        getStartCell: function() {
+            throw new Error('Not implements getStartCell');
         },
 
-        getStartPosition: function() {
-            throw new Error('Not implements getStartPosition');
+        getStartCenterCell: function() {
+            throw new Error('Not implements getStartCenterCell');
         },
 
-        getStartCenterPosition: function() {
-            throw new Error('Not implements getStartCenterPosition');
+        createStartPositions: function() {
+            var code = this.getCode();
+            var cells = _.map(this.getStartCell(), function(c) {
+                c['code'] = code;
+                return c;
+            });
+            return new App.TetoriminoCellCollection(cells);
+        },
+
+        createStartCenterPosition: function() {
+            var code = this.getCode();
+            var cell = this.getStartCenterCell();
+
+            cell['code'] = code;
+
+            return new App.TetoriminoCellModel(cell);
         },
 
         fix: function() {
@@ -134,16 +152,12 @@
             return this.fixed;
         },
 
-        placedIn: function(x, y) {
-            var positions = this.getPositionList();
-            for (var i = 0, len = positions.length; i < len; i++) {
-                var p = positions[i];
-                if (p.x === x && p.y === y) {
-                    return true;
-                }
-            }
+        getPositions: function() {
+            return this.positions;
+        },
 
-            return false;
+        placedIn: function(x, y) {
+            return this.positions.placedIn(x, y);
         }
 
     }, {

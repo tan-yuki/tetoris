@@ -23,6 +23,10 @@ body {
 #main table td.T { background-color: olive; }
 #main table td.Z { background-color: slateblue; }
 
+#next-tetorimino {
+    border: 1px solid black;
+}
+
 #footer p {
     text-align: center;
 }

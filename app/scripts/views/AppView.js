@@ -12,11 +12,13 @@
             var row = options.row;
 
             var tetoriminoCollection = new App.TetoriminoCollection();
+            var fixedCellCollection = new App.FixedCellCollection();
 
             App.service.tetoriminoManager = new App.TetoriminoManagerModel({
                 col: col,
                 row: row,
-                tetoriminoCollection: tetoriminoCollection
+                tetoriminoCollection: tetoriminoCollection,
+                fixedCellCollection: fixedCellCollection
             });
 
             this.workspace = new App.WorkSpaceView({

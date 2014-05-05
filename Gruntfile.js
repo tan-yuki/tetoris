@@ -154,7 +154,10 @@ module.exports = function (grunt) {
         // Automatically inject Bower components into the HTML file
         bowerInstall: {
             app: {
-                src: ['<%= config.app %>/index.html'],
+                src: [
+                    '<%= config.app %>/index.html',
+                    'test/index.html'
+                ],
                 ignorePath: '<%= config.app %>/'
             }
         },
@@ -304,7 +307,6 @@ module.exports = function (grunt) {
             ]
         }
     });
-
 
     grunt.registerTask('serve', function (target) {
         if (target === 'dist') {

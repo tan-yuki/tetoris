@@ -3,26 +3,21 @@
 
     App.TetoriminoManagerModel = Backbone.Model.extend({
 
-        col: 0,
-
-        row: 0,
-
         /**
          * @type App.TetoriminoCollection
          */
         tetoriminoCollection: null,
 
-        initialize: function(options) {
+        /**
+         * @type App.FixedCellCollection
+         */
+        fixedCellCollection: null,
 
-            this.col = options.col;
-            this.row = options.row;
+        initialize: function(options) {
 
             // Initialize collection
             this.tetoriminoCollection = options.tetoriminoCollection;
-        },
-
-        getTetoriminoCollection: function() {
-            return this.tetoriminoCollection;
+            this.fixedCellCollection  = options.fixedCellCollection;
         },
 
         current: function() {
@@ -50,56 +45,36 @@
         fix: function() {
             this.tetoriminoCollection.dequeue();
 
-            this.checkFilledLine();
-        },
-
-        getFixedPositionList: function() {
-            return this.tetoriminoCollection.getFixedPositionList();
-        },
-
-        checkFilledLine: function() {
-            var positions = this.getFixedPositionList();
-
-            for (var i = 0; i < this.col; i++) {
-                var linePositions = _.where(positions, {y: i});
-                if (_.uniq(_.pluck(linePositions, 'x')).length === this.row) {
-                    this.destroyLine(i);
-                }
-            }
-        },
-
-        destroyLine: function(i) {
-            this.tetoriminoCollection.destroyLine(i);
-        },
-
-        canMoveTo: function(x, y) {
-            if (x < 0 || x > this.row - 1) {
-                return false;
-            }
-
-            if (y < 0 || y > this.col - 1) {
-                return false;
-            }
-
-            var fixedList = this.getFixedPositionList();
-            if (!fixedList) {
-                return true;
-            }
-
-            for (var i = 0, len = fixedList.length; i < len; i++) {
-                var fixed = fixedList[i];
-
-                if (x === fixed.x && y === fixed.y) {
-                    return false;
-                }
-            }
-
-            return true;
+            this.fixedCellCollection.destroyFilledLine();
         },
 
         isGameOver: function() {
-            var fixedList = this.getFixedPositionList();
-            return !!_.where(fixedList, {y:0}).length;
+            return this.fixedCellCollection.reachTopLine();
+        },
+
+        addFixedPositions: function(positions) {
+            this.fixedCellCollection.add(positions.models);
+        },
+
+        canMoveTo: function(x, y) {
+            var errormsg = App.CellModel.validateCell(x, y);
+            if (errormsg) {
+                return false;
+            }
+
+            return !this.isFixed(x, y);
+        },
+
+        isFixed: function(x, y) {
+            return this.fixedCellCollection.exists(x, y);
+        },
+
+        getTetoriminoCollection: function() {
+            return this.tetoriminoCollection;
+        },
+
+        getFixedCellCollection: function() {
+            return this.fixedCellCollection;
         }
 
     });

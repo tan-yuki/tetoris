@@ -6,16 +6,16 @@
             return 'Z';
         },
 
-        getStartPosition: function() {
+        getStartCell: function() {
             return [
-                this.createPosition({x:3, y:0}),
-                this.createPosition({x:4, y:0}),
-                this.createPosition({x:4, y:1}),
-                this.createPosition({x:5, y:1})
+                {x:3, y:0},
+                {x:4, y:0},
+                {x:4, y:1},
+                {x:5, y:1}
             ];
         },
 
-        getStartCenterPosition: function() {
+        getStartCenterCell: function() {
             return {x:4, y:1};
         }
 

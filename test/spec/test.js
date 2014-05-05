@@ -3,10 +3,10 @@
 (function () {
     'use strict';
 
-    describe('Give it some context', function () {
-        describe('maybe a bit more context here', function () {
-            it('should run here few assertions', function () {
-
+    describe('CellModel', function () {
+        describe('#validateCell', function () {
+            it('should return false if x is minus value', function () {
+                expect(App.CellModel.validateCell(-1, 0)).to.be.false;
             });
         });
     });

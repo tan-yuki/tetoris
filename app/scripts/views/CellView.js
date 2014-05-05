@@ -16,12 +16,14 @@
             this.x = options.x;
             this.y = options.y;
 
-            this.tetoriminoCollection = App.service.tetoriminoManager.getTetoriminoCollection();
+            var manager = App.service.tetoriminoManager;
+            this.tetoriminoCollection = manager.getTetoriminoCollection();
+            this.fixedCellCollection = manager.getFixedCellCollection();
 
+            this.listenTo(this.fixedCellCollection, 'add', this.fix);
+            this.listenTo(this.fixedCellCollection, 'reset', this.refresh);
             this.listenTo(App.mediator, 'cell:watch', this.watchTetorimino);
             this.listenTo(this.tetoriminoCollection, 'dequeue', this.watchTetorimino);
-            this.listenTo(this.tetoriminoCollection, 'fix', this.fix);
-            this.listenTo(this.tetoriminoCollection, 'destroyLine', this.refresh);
         },
 
         fix: function(tetorimino) {
@@ -69,7 +71,7 @@
 
         refresh: function() {
             // 自分自身のCellに色がつくかどうか判定し直す
-            var p = this.tetoriminoCollection.getFixedPosition(this.x, this.y);
+            var p = this.fixedCellCollection.findCell(this.x, this.y);
             if (p) {
                 this.setCode(p.code);
                 this.fixed = true;
