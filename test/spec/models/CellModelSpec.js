@@ -31,16 +31,16 @@
         describe('#isSamePlace', function () {
             it('should return true if this cell is located in the same place', function () {
                 var cell = {x: 1, y: 2};
-                var model = new App.CellModel(cell)
+                var model = new App.CellModel(cell);
 
-                expect(model.isSamePlace(new App.CellModel(cell))).to.be.true;
+                expect(model.isSamePlace(new App.CellModel(cell))).to.be.true();
             });
 
             it('should return false if this cell is not located in the same place', function () {
                 var cell = {x: 1, y: 2};
-                var model = new App.CellModel(cell)
+                var model = new App.CellModel(cell);
 
-                expect(model.isSamePlace(new App.CellModel({x:0, y:2}))).to.be.false;
+                expect(model.isSamePlace(new App.CellModel({x:0, y:2}))).to.be.false();
             });
         });
     });

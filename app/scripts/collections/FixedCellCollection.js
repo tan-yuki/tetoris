@@ -11,7 +11,7 @@
             var positions = this.map(function(p) {
                 return new App.TetoriminoCellModel({
                     x: p.get('x') + vector.x,
-                    y: y.get('y') + vector.y
+                    y: p.get('y') + vector.y
                 });
             });
 
@@ -33,18 +33,22 @@
                 return !_.contains(lineList, p.get('y'));
             });
 
-            // padding this line
-            for (var i = 0, len = lineList.length; i < len; i++) {
-                var line = lineList[i];
-
-                positions = _.map(positions, function(p) {
-                    if (p.get('y') < line) {
+            // padding deleted line
+            var deleteLine = function(positions, y) {
+                return _.map(positions, function(p) {
+                    if (p.get('y') < y) {
                         // increment
                         p.set('y', p.get('y') + 1);
                     }
 
                     return p;
                 });
+            };
+
+            for (var i = 0, len = lineList.length; i < len; i++) {
+                var line = lineList[i];
+                positions = deleteLine(positions, line);
+
             }
 
             this.reset(positions);
@@ -54,12 +58,16 @@
 
             var lines = [];
 
+            var countFilledCell = _.bind(function(y) {
+                // y 行の fixed のCellの長さを取得
+                return this.filter(function(p) {
+                    return p.get('y') === y;
+                }).length;
+            }, this);
+
             for (var i = 0; i < COLUMN; i++) {
 
-                // i 行の fixed のCellの長さを取得
-                var filledCount = this.filter(function(p) {
-                    return p.get('y') === i;
-                }).length;
+                var filledCount = countFilledCell(i);
 
                 if (filledCount === ROW) {
                     lines.push(i);

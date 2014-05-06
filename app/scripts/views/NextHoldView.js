@@ -9,7 +9,7 @@
          */
         collection: null,
 
-        initialize: function(options) {
+        initialize: function() {
             this.listenTo(this.collection, 'dequeue', this.render);
         },
 

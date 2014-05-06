@@ -21,16 +21,16 @@
             for (var i = 0; i < col; i++) {
                 var $tr = $('<tr/>');
 
-                var cell_list = [];
+                var cellList = [];
                 for (var j = 0; j < row; j++) {
 
                     var cell = new App.CellView({
                         x: j,
                         y: i
                     });
-                    cell_list.push(cell.$el);
+                    cellList.push(cell.$el);
                 }
-                $tr.append(cell_list);
+                $tr.append(cellList);
                 this.$el.append($tr);
             }
 

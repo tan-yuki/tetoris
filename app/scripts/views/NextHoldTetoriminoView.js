@@ -24,9 +24,9 @@
             var xRange = maxX - minX;
             var yRange = maxY - minY;
 
-            var tr_list = [];
+            var trList = [];
             for (var i = 0; i <= yRange; i++) {
-                var td_list = [];
+                var tdList = [];
                 var $tr = $('<tr/>');
                 for (var j = 0; j <= xRange; j++) {
                     var $td = $('<td/>');
@@ -36,13 +36,13 @@
                         $td.addClass(p.getCode());
                     }
 
-                    td_list.push($td);
+                    tdList.push($td);
                 }
-                $tr.append(td_list);
-                tr_list.push($tr);
+                $tr.append(tdList);
+                trList.push($tr);
             }
 
-            this.$el.append(tr_list);
+            this.$el.append(trList);
             return this;
         }
 

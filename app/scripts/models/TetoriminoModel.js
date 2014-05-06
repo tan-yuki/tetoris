@@ -128,7 +128,7 @@
         createStartPositions: function() {
             var code = this.getCode();
             var cells = _.map(this.getStartCell(), function(c) {
-                c['code'] = code;
+                c.code = code;
                 return c;
             });
             return new App.TetoriminoCellCollection(cells);
@@ -138,7 +138,7 @@
             var code = this.getCode();
             var cell = this.getStartCenterCell();
 
-            cell['code'] = code;
+            cell.code = code;
 
             return new App.TetoriminoCellModel(cell);
         },

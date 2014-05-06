@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var queue_length = 5;
+    var queueLength = 5;
 
     App.TetoriminoCollection = Backbone.Collection.extend({
 
@@ -14,9 +14,9 @@
          */
         fixedCellCollection: null,
 
-        initialize: function(options) {
+        initialize: function() {
             var list = [];
-            for (var i = 0; i < queue_length; i++) {
+            for (var i = 0; i < queueLength; i++) {
                 list.push(this.createNewTetorimino());
             }
 

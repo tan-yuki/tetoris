@@ -39,10 +39,10 @@
             App.mediator.trigger('cell:watch');
 
             // start listen user operation
-            var operator = new App.UserOperatorView();
+            new App.UserOperatorView();
 
             // start timer
-            var timer = new App.TimerView();
+            new App.TimerView();
         }
     });
 })();

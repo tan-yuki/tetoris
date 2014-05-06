@@ -1,5 +1,4 @@
-var App = App || {};
-
-App.Tetorimino = {};
-
-App.service = {};
+var App = {
+    Tetorimino: {},
+    service: {}
+};

@@ -16,18 +16,18 @@
             this.pressing = true;
 
             var code = e.keyCode || e.which;
-            if (code == 37) { // left key
+            if (code === 37) { // left key
                 App.service.tetoriminoManager.left();
-            } else if (code == 39) { // right key
+            } else if (code === 39) { // right key
                 App.service.tetoriminoManager.right();
-            } else if (code == 40) { // down key
+            } else if (code === 40) { // down key
                 App.service.tetoriminoManager.down();
-            } else if (code == 32) { // space key
+            } else if (code === 32) { // space key
                 App.service.tetoriminoManager.rotate();
             }
         },
 
-        keyup: function(e) {
+        keyup: function() {
             this.pressing = false;
         }
     });

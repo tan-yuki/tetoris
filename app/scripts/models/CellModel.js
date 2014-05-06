@@ -12,7 +12,7 @@
             y: 0
         },
 
-        validate: function(attrs, options) {
+        validate: function(attrs) {
             var x = attrs.x;
             var y = attrs.y;
 

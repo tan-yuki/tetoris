@@ -19,13 +19,13 @@
             it('should return true if this cell is placed in specified cordinate', function () {
                 var model = new App.TetoriminoCellModel({x: 0, y: 1});
 
-                expect(model.placedIn(0, 1)).to.be.true;
+                expect(model.placedIn(0, 1)).to.be.true();
             });
 
             it('should return false if this cell is not placed in specified cordinate', function () {
                 var model = new App.TetoriminoCellModel({x: 0, y: 1});
 
-                expect(model.placedIn(0, 2)).to.be.false;
+                expect(model.placedIn(0, 2)).to.be.false();
             });
         });
     });
