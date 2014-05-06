@@ -9,8 +9,6 @@
 
         row: 0,
 
-        cellCollection: null,
-
         initialize: function(options) {
             this.col = options.col;
             this.row = options.row;

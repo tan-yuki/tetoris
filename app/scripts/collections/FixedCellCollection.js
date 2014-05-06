@@ -5,21 +5,7 @@
         ROW    = config.row,
         COLUMN = config.col;
 
-    App.FixedCellCollection = Backbone.Collection.extend({
-
-        model: App.TetoriminoCellModel,
-
-        exists: function(x, y) {
-            return this.some(function(p) {
-                return p.placedIn(x, y);
-            });
-        },
-
-        findCell: function(x, y) {
-            return this.find(function(p) {
-                return p.placedIn(x, y);
-            });
-        },
+    App.FixedCellCollection = App.CellCollection.extend({
 
         _createCollectionMoveTo: function(vector) {
             var positions = this.map(function(p) {
@@ -30,16 +16,6 @@
             });
 
             return new App.FixedCellCollection(positions, {silent: true});
-        },
-
-        canMoveTo: function(vector) {
-            return this._createCollectionMoveTo(vector).every(function(p) {
-                if (!p.isValid()) {
-                    return false;
-                }
-
-                return !position.isSamePlace(p);
-            });
         },
 
         destroyLine: function(y) {

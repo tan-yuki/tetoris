@@ -35,22 +35,25 @@
         },
 
         dequeue: function() {
+            var manager = App.service.tetoriminoManager;
+
+            // listの先頭のmodelをlistから取り除く
             var tetorimino = this.shift();
+
+            // listの最後にmodelを追加
             this.add(this.createNewTetorimino());
 
-            if (tetorimino) {
-                this.fix(tetorimino);
-                this.trigger('dequeue');
-            }
+            // 取り除いたmodelのCellをfixさせる
+            manager.addFixedPositions(tetorimino.getPositions());
+
+            // `dequeue`イベントを発火させる
+            this.trigger('dequeue');
 
             return tetorimino;
         },
 
-        fix: function(tetorimino) {
-            var manager = App.service.tetoriminoManager;
-            manager.addFixedPositions(tetorimino.getPositions());
-
-            this.trigger('fix', tetorimino);
+        next: function() {
+            return this.at(1);
         }
 
     });

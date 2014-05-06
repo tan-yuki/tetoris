@@ -157,7 +157,7 @@
         },
 
         placedIn: function(x, y) {
-            return this.positions.placedIn(x, y);
+            return this.positions.exists(x, y);
         }
 
     }, {

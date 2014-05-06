@@ -4,8 +4,40 @@ body {
     color: #333;
 }
 
+#main {
+    text-align: center;
+}
 
-#main table {
+#workspace {
+    display: inline-block;
+}
+
+#subspace {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#subspace .hold {
+    margin: 30px;
+}
+
+#subspace .next-tetorimino {
+    width:  65px;
+    height: 90px;
+    border: 1px solid black;
+}
+
+#subspace .next-tetorimino table {
+    position: relative;
+    margin: auto;
+}
+
+#subspace .next-tetorimino table td {
+    height: 15px;
+    width:  15px;
+}
+
+#workspace table {
     margin: auto;
     border: 1px solid black;
 }
@@ -22,10 +54,6 @@ body {
 #main table td.S { background-color: purple; }
 #main table td.T { background-color: olive; }
 #main table td.Z { background-color: slateblue; }
-
-#next-tetorimino {
-    border: 1px solid black;
-}
 
 #footer p {
     text-align: center;
